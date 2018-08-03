@@ -42,6 +42,17 @@ function productDisplay(){
     });
 };
 
+function checkInt(value) {
+	var integer = Number.isInteger(parseFloat(value));
+	var sign = Math.sign(value);
+
+	if (integer && (sign === 1)) {
+		return true;
+	} else {
+		return 'Please enter a positive integer.';
+	}
+}
+
 //Function where user chooses an item to purchase
 function itemPurchase(){
 
@@ -63,34 +74,42 @@ function itemPurchase(){
                 {
                     type: "input",
                     name: "id",
-                    message: "What is the number of the item you would like to purchase?"
+                    message: "What is the number of the item you would like to purchase?",
+                    validate: checkInt
                 },
             
                 {
                     type: "input",
                     name: "quantity",
-                    message: "How many would you like?"
+                    message: "How many would you like?",
+                    validate: checkInt
                 }
             ]).then(function(inquirerResponse){
 
+                    //Variables convert user input to integer
                     var selectedProduct = parseInt(inquirerResponse.id);
                     var selectedQuantity = parseInt(inquirerResponse.quantity);
 
                     console.log(selectedProduct);
                     console.log(selectedQuantity);
 
+                    
+                    //Function that matches id chosen from the database and updates quantity
                     function updateInventory(){
     
                         var query = "SELECT * FROM products WHERE item_id = ?";
+
                         connection.query(query, [selectedProduct], function(err,res){
+
                             if (err) throw err;
                             console.log(res);
-                    })
+
+                    });
 
                     }
 
                     updateInventory();
-
+                 
             });
             
         }
@@ -98,7 +117,7 @@ function itemPurchase(){
 
 };
 
-//Function that matches id chosen from the database and updates quantity
+
 
 
 
