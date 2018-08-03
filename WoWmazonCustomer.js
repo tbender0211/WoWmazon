@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
 
 });
 
-var divider = "---------------------------\n";
+var divider = "\n---------------------------\n";
 
 connection.connect(function(err){
 
@@ -43,6 +43,7 @@ function productDisplay(){
     });
 };
 
+//Verifies user input is an integer
 function checkInt(value) {
 	var integer = Number.isInteger(parseFloat(value));
 	var sign = Math.sign(value);
@@ -52,7 +53,7 @@ function checkInt(value) {
 	} else {
 		return 'Please enter a positive integer.';
 	}
-}
+};
 
 //Function where user chooses an item to purchase
 function itemPurchase(){
