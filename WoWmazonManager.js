@@ -23,12 +23,14 @@ connection.connect(function(err){
 function managementOptions(){
 
     inquirer.prompt([
+
         {
             type: "list",
             name: "task",
             message: "Welcome WoWmazon management, what function should you like to perform today?",
             choices: ["View Inventory", "View Low Inventory", "Add to Inventory", "Add New Product"]
         }
+        
     ]).then(function(manager){
 
         var query = "";
@@ -79,25 +81,31 @@ function managementOptions(){
         }
 
         if(manager.task === "Add New Product"){
-            
+
         }
     })
 };
 
 function checkInt(value) {
+
 	var integer = Number.isInteger(parseFloat(value));
 	var sign = Math.sign(value);
 
 	if (integer && (sign === 1)) {
-		return true;
+
+        return true;
+        
 	} else {
-		return 'Please enter a positive integer.';
+
+        return 'Please enter a positive integer.';
+        
 	}
 };
 
 function addInventory(){
 
     inquirer.prompt([
+
         {
             type: "input",
             name: "id",
@@ -111,6 +119,7 @@ function addInventory(){
             message: "How many would you like to add to inventory?",
             validate: checkInt
         }
+
     ]).then(function(inquirerResponse){
 
         //Variables convert user input to integer
@@ -187,11 +196,15 @@ function productDisplay(){
 };
 
 function chooseProduct(){
+
     productDisplay();
+
 }
 
 function manageWowmazon(){
+
     managementOptions();
+
 };
 
 manageWowmazon();

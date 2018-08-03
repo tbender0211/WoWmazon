@@ -45,13 +45,18 @@ function productDisplay(){
 
 //Verifies user input is an integer
 function checkInt(value) {
+
 	var integer = Number.isInteger(parseFloat(value));
 	var sign = Math.sign(value);
 
 	if (integer && (sign === 1)) {
-		return true;
+
+        return true;
+        
 	} else {
-		return 'Please enter a positive integer.';
+
+        return 'Please enter a positive integer.';
+        
 	}
 };
 
@@ -86,87 +91,88 @@ function itemPurchase(){
                     message: "How many would you like?",
                     validate: checkInt
                 }
+
             ]).then(function(inquirerResponse){
 
-                    //Variables convert user input to integer
-                    var selectedProduct = parseInt(inquirerResponse.id);
-                    var selectedQuantity = parseInt(inquirerResponse.quantity);
+                //Variables convert user input to integer
+                var selectedProduct = parseInt(inquirerResponse.id);
+                var selectedQuantity = parseInt(inquirerResponse.quantity);
 
-                    // console.log(selectedProduct);
-                    // console.log(selectedQuantity);
+                // console.log(selectedProduct);
+                // console.log(selectedQuantity);
 
                     
-                    //Function that matches id chosen to the item in the database
-                    function itemSelect(){
+                //Function that matches id chosen to the item in the database
+                function itemSelect(){
     
-                        var query = "SELECT * FROM products WHERE item_id = ?";
+                    var query = "SELECT * FROM products WHERE item_id = ?";
 
-                        connection.query(query, [selectedProduct], function(err,res){
+                    connection.query(query, [selectedProduct], function(err,res){
 
-                            if (err) throw err;
-                            // console.log(res);
+                        if (err) throw err;
+                        // console.log(res);
 
-                            var quantity = res[0].stock_quantity;
-                            // console.log(quantity);
+                        var quantity = res[0].stock_quantity;
+                        // console.log(quantity);
 
-                            if(quantity > 0){
+                        if(quantity > 0){
 
-                                console.log(divider);
-                                console.log("Bid accepted! You've been charged " + res[0].price + " gold and " + res[0].product_name + " has been sent to your mailbox.\n");
-                                console.log(divider)
+                            console.log(divider);
+                            console.log("Bid accepted! You've been charged " + res[0].price + " gold and " + res[0].product_name + " has been sent to your mailbox.\n");
+                            console.log(divider)
                                 
-                                var newStockQuantity = quantity -= selectedQuantity;
+                            var newStockQuantity = quantity -= selectedQuantity;
 
-                                function updateInventory(){
+                            function updateInventory(){
 
-                                    var query = "UPDATE products SET stock_quantity = ? WHERE item_id = ?";
+                                var query = "UPDATE products SET stock_quantity = ? WHERE item_id = ?";
 
-                                    connection.query(query, [newStockQuantity, selectedProduct], function(err,res){
+                                connection.query(query, [newStockQuantity, selectedProduct], function(err,res){
 
-                                        if (err) throw err;
+                                    if (err) throw err;
 
-                                    })
+                                })
 
                                     
-                                };
+                            };
 
-                                updateInventory();
+                            updateInventory();
 
-                                inquirer.prompt([
+                            inquirer.prompt([
 
-                                    {
-                                        type: "confirm",
-                                        message: "Would you like the return to the auction house?",
-                                        name: "confirm"
-                                    }
+                                {
+                                    type: "confirm",
+                                    message: "Would you like the return to the auction house?",
+                                    name: "confirm"
+                                }
 
-                                ]).then(function(inquirerResponse){
+                            ]).then(function(inquirerResponse){
 
-                                    if (inquirerResponse.confirm){
+                                if (inquirerResponse.confirm){
 
-                                         runWowmazon();
+                                    runWowmazon();
 
-                                    }else{
+                                }else{
 
-                                        console.log(divider);
-                                        console.log("Thank you for shopping with us! Please come again soon.")
+                                    console.log(divider);
+                                    console.log("Thank you for shopping with us! Please come again soon.")
 
-                                    }
-                                })
+                                }
+                            })
                                
 
-                            }else{
+                        }else{
 
-                                console.log("Sorry, the item you've requested is no longer available.")
-                                runWowmazon();
+                            console.log("Sorry, the item you've requested is no longer available.")
+                            runWowmazon();
 
-                            }
+                        }
 
                     });
 
-                    }
+                };
 
-                    itemSelect();
+                itemSelect();
                  
             });
             
