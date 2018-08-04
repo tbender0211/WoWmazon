@@ -26,6 +26,8 @@ function productDisplay(){
 
     connection.query(query, function(err, res){
 
+        if (err) throw err;
+
         console.log(divider);
         console.log("\nHorde Auction House\n");
         console.log("Available Items: ");
@@ -33,7 +35,7 @@ function productDisplay(){
 
         for (i=0; i < res.length; i++){
 
-            console.log(res[i].item_id + ". " + res[i].product_name);
+            console.log(res[i].item_id + ". " + res[i].product_name + " , Price: " + res[i].price);
             
         }
 
