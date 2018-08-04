@@ -172,6 +172,47 @@ function addInventory(){
     })
 };
 
+function createProduct(){
+
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "What is the name of the product to be addded?",
+            name: "name",
+        },
+        {
+            type: "input",
+            message: "To what department does this product belong?",
+            name: "department"
+        },
+        {
+            type: "input",
+            message: "For how much would you like to sell the product?",
+            name: "price",
+        },
+        {
+            type: "input",
+            message: "How many of the product would you like to add?",
+            name: "quantity",
+            validate: checkInt
+        }
+    ]).then(function(inquirerResponse){
+
+        var name = inquirerResponse.name;
+        var department = inquirerResponse.department;
+        var price = inquirerResponse.price;
+        var quantity = inquirerResponse.quantity;
+
+        var query = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)";
+
+        connection.query(query, function(err,res){
+            console.log("Product added to inventory.")
+        });
+    });
+
+
+};
+
 //Function that displays products from the WoWmazon Database
 function productDisplay(){
 
