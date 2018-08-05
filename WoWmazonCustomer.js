@@ -35,7 +35,7 @@ function productDisplay(){
 
         for (i=0; i < res.length; i++){
 
-            console.log(res[i].item_id + ". " + res[i].product_name + " , Price: " + res[i].price);
+            console.log(res[i].item_id + ". " + res[i].product_name + " , Price: " + res[i].price + " , Quantity Available: " + res[i].stock_quantity);
             
         }
 
@@ -165,7 +165,9 @@ function itemPurchase(){
 
                         }else{
 
-                            console.log("Sorry, the item you've requested is no longer available.")
+                            console.log(divider);
+                            console.log("Sorry, the item you've requested is no longer available. Try again.");
+                            console.log(divider);
                             runWowmazon();
 
                         }
