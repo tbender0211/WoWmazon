@@ -72,6 +72,7 @@ function managementOptions(){
                 }
 
             })
+
         }
 
         if(manager.task === "Add to Inventory"){
@@ -81,6 +82,8 @@ function managementOptions(){
         }
 
         if(manager.task === "Add New Product"){
+
+            createProduct();
 
         }
     })
@@ -205,8 +208,11 @@ function createProduct(){
 
         var query = "INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES (?, ?, ?, ?)";
 
-        connection.query(query, function(err,res){
-            console.log("Product added to inventory.")
+        connection.query(query, [name,  department, price, quantity], function(err,res){
+
+            console.log(divider);
+            console.log("Product successfully added to inventory!");
+    
         });
     });
 
